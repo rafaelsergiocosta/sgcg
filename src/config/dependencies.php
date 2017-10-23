@@ -5,9 +5,10 @@ $container = $app->getContainer();
 
 // Twig view renderer
 $container['view'] = function ($container) {
-    $view = new \Slim\Views\Twig(__DIR__ . '/../templates', [
-        'cache' => false
-    ]);
+    $view = new \Slim\Views\Twig(
+        $container['settings']['renderer']['template_path'], 
+        $container['settings']['renderer']['options']
+    );
     
     // Instantiate and add Slim specific extension
     $basePath = rtrim(str_ireplace('index.php', '', $container['request']->getUri()->getBasePath()), '/');

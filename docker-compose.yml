@@ -11,6 +11,10 @@ services:
         command: php -S 0.0.0.0:8080 -t public public/index.php
         environment:
             docker: "true"
+            DB_HOST: 'sgcg.db'
+            DB_DATABASE: 'sgcg'
+            DB_USERNAME: 'root'
+            DB_PASSWORD: 'admin'
         ports:
             - 8080:8080
         volumes:

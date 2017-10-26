@@ -1,22 +1,53 @@
 version: '2'
-
-volumes:
-    logs:
-        driver: local
-
 services:
-    slim:
-        image: php:7-alpine
-        working_dir: /var/www
-        command: php -S 0.0.0.0:8080 -t public public/index.php
-        environment:
-            docker: "true"
-            DB_HOST: 'sgcg.db'
-            DB_DATABASE: 'sgcg'
-            DB_USERNAME: 'root'
-            DB_PASSWORD: 'admin'
-        ports:
-            - 8080:8080
+    proxy:
+      container_name: proxy-sgcg.rasersoft.com.br
+      image: jwilder/nginx-proxy:latest
+      volumes:
+        - "/var/run/docker.sock:/tmp/docker.sock:ro"
+      ports:
+        - "80:80"
+      restart: unless-stopped
+
+    sgcg.rasersoft.com.br:
+        container_name: sgcg.rasersoft.com.br
+        image: sgcg-rasersoft
+        restart: always
         volumes:
-            - .:/var/www
-            - logs:/var/www/logs
+          - ".:/var/www/html/:rw"
+        environment:
+          VIRTUAL_HOST: 'sgcg.rasersoft.com.br'
+          APACHE_DOCUMENT_ROOT: '/var/www/html/public'
+          ENV_ALIAS: 'develop'
+          DB_HOST: 'sgcg.db'
+          DB_DATABASE: 'sgcg'
+          DB_USERNAME: 'root'
+          DB_PASSWORD: 'admin'
+        build: .docker/
+        links:
+          - sgcg.db
+
+    sgcg.db:
+      container_name: sgcg.db
+      image: mariadb:10.1
+      volumes:
+        - "/home/rafael/Documentos/Projetos/Docker/mysql:/var/lib/mysql"
+        - "./dump/:/dump"
+      ports:
+        - "3306:3306"
+      expose:
+        - "3306"
+      restart: always
+      environment:
+        MYSQL_ROOT_PASSWORD: admin
+
+    portainer.io:
+       container_name: portainer.local
+       image: portainer/portainer
+       environment:
+         HTTP_PROXY: proxy-sgcg.rasersoft.com.br
+       volumes:
+         - '/opt/portainer:/data'
+         - /var/run/docker.sock:/var/run/docker.sock
+       ports:
+         - "9001:9000"

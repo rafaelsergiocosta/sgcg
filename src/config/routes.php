@@ -15,3 +15,9 @@ use App\Controller\AppController;
 });*/
 
 $app->get('/', AppController::class.':index');
+
+$app->get('/main', AppController::class.':main');
+
+$app->post('/login', AppController::class.':login');
+
+$app->get('/logout', AppController::class.':logout');

@@ -18,9 +18,34 @@ class AppController
         $this->view = $c->view;
     }
 
+    public function main(Request $request, Response $response, array $args)
+    {
+        $user = $this->db->table('users')->where('id', '1')->first();
+        $args['name'] = $user->name;
+        return $this->view->render($response, 'index.html', $args);
+    }
+
     public function index(Request $request, Response $response, array $args)
     {
-        $args['name'] = 'Teste';
-        return $this->view->render($response, 'index.html', $args);
+        return $this->view->render($response, 'login.html', $args);
+    }
+
+    public function login(Request $request, Response $response, array $args)
+    {
+        $args = $request->getParams();
+        $user = $this->db->table('users')->where('login', $args['login'])->first();
+        if (password_verify($args['password'], $user->password)) {
+            $_SESSION['user']['id'] = $user->id;
+            $_SESSION['user']['login'] = $user->login;
+            return $this->view->render($response, 'index.html', $args);
+        } else {
+            return $this->view->render($response, 'login.html', $args);
+        }
+    }
+
+    public function logout(Request $request, Response $response, array $args)
+    {
+        session_destroy();
+        return $this->view->render($response, 'login.html', $args);
     }
 }

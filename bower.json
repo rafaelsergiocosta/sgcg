@@ -1,0 +1,21 @@
+{
+  "name": "sgcg",
+  "homepage": "https://github.com/rafaelsergiocosta/sgcg",
+  "authors": [
+    "(Rafael  Sergio da Costa <rafaelsergiocosta@gmail.com>)"
+  ],
+  "description": "Sistema de Gestão do Conhecimento Gamificado",
+  "main": "index.php",
+  "license": "GPLV3",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "^3.2.1",
+    "bootstrap": "^3.3.7"
+  }
+}

@@ -18,16 +18,16 @@ class AppController
         $this->view = $c->view;
     }
 
-    public function main(Request $request, Response $response, array $args)
+    public function home(Request $request, Response $response, array $args)
     {
         $user = $this->db->table('users')->where('id', '1')->first();
         $args['name'] = $user->name;
-        return $this->view->render($response, 'index.html', $args);
+        return $this->view->render($response, 'home.html', $args);
     }
 
     public function index(Request $request, Response $response, array $args)
     {
-        return $this->view->render($response, 'login.html', $args);
+        return $this->view->render($response, 'index.html', $args);
     }
 
     public function login(Request $request, Response $response, array $args)
@@ -37,9 +37,9 @@ class AppController
         if (password_verify($args['password'], $user->password)) {
             $_SESSION['user']['id'] = $user->id;
             $_SESSION['user']['login'] = $user->login;
-            return $this->view->render($response, 'index.html', $args);
+            return $this->view->render($response, 'home.html', $args);
         } else {
-            return $this->view->render($response, 'login.html', $args);
+            return $this->view->render($response, 'index.html', $args);
         }
     }
 
@@ -47,5 +47,10 @@ class AppController
     {
         session_destroy();
         return $this->view->render($response, 'login.html', $args);
+    }
+
+    public function newPage(Request $request, Response $response, array $args)
+    {
+        return $this->view->render($response, 'newPage.html', $args);
     }
 }

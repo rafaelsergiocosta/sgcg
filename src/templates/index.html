@@ -1,34 +1,102 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8"/>
-        <title>Slim 3</title>
-        <link href='//fonts.googleapis.com/css?family=Lato:300' rel='stylesheet' type='text/css'>
-        <style>
-            body {
-                margin: 50px 0 0 0;
-                padding: 0;
-                width: 100%;
-                font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-                text-align: center;
-                color: #aaa;
-                font-size: 18px;
-            }
 
-            h1 {
-                color: #719e40;
-                letter-spacing: -3px;
-                font-family: 'Lato', sans-serif;
-                font-size: 100px;
-                font-weight: 200;
-                margin-bottom: 0;
-            }
-        </style>
-    </head>
-    <body>
-        <a href="/logout">Logout</a>
-        <h1>Slim</h1>
-        <div>a microframework for PHP</div>
-            <h2>Hello {{ name }}!</h2>
-    </body>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>SGCG - Sistema de Gestão do Conhecimento Gamificado</title>
+    <link rel="stylesheet" href="./vendor/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./vendor/bootstrap/dist/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="./css/cognitio.css">
+    <script src="./vendor/jquery/dist/jquery.min.js"></script>
+    <script src="./vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+    <ul class="topnav">
+        <li>
+            <a href="/">Pagina Inicial</a>
+        </li>
+        <li>
+            <a href="#news">Meus Dados</a>
+        </li>
+        <li>
+            <a href="#contact">Ranking</a>
+        </li>
+        <li>
+            <a class="active" href="/add-knowledge">Novo Conhecimento</a>
+        </li>
+        <li class="right">
+            <a href="#about">Logout</a>
+        </li>
+    </ul>
+
+    <div class="container">
+        <div class="jumbotron">
+            <h1 class="text-center">Bem-Vindo {{usuário}}</h1>
+        </div>
+        <input class="form-control" type="search" placeholder="Pesquisa">
+        <div class="table-responsive">
+            <table class="table table-hover">
+                <tr>
+                    <th>Titulo</th>
+                    <th>Autor</th>
+                    <th>Categoria</th>
+                    <th class="text-center">Ação</th>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#/view/{{post._id}}">{{titulo}}</a>
+                    </td>
+                    <td>{{autor}}</td>
+                    <td>{{categoria}}</td>
+                    <td class="text-center">
+                        <a ng-href="#/post/{{post._id}}" class="btn btn-primary">Editar</a>
+                        <button ng-click="remove(post)" class="btn btn-warning">Remover</buttom>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#/view/{{post._id}}">{{titulo}}</a>
+                    </td>
+                    <td>{{autor}}</td>
+                    <td>{{categoria}}</td>
+                    <td class="text-center">
+                        <a ng-href="#/post/{{post._id}}" class="btn btn-primary">Editar</a>
+                        <button ng-click="remove(post)" class="btn btn-warning">Remover</buttom>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#/view/{{post._id}}">{{titulo}}</a>
+                    </td>
+                    <td>{{autor}}</td>
+                    <td>{{categoria}}</td>
+                    <td class="text-center">
+                        <a ng-href="#/post/{{post._id}}" class="btn btn-primary">Editar</a>
+                        <button ng-click="remove(post)" class="btn btn-warning">Remover</buttom>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href="#/view/{{post._id}}">{{titulo}}</a>
+                    </td>
+                    <td>{{autor}}</td>
+                    <td>{{categoria}}</td>
+                    <td class="text-center">
+                        <a ng-href="#/post/{{post._id}}" class="btn btn-primary">Editar</a>
+                        <button ng-click="remove(post)" class="btn btn-warning">Remover</button>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <footer class="footer">
+        <p>Rasersoft</p>
+    </footer>
+
+</body>
+
 </html>

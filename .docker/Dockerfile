@@ -4,7 +4,6 @@ FROM php:7.1-apache
 RUN apt-get update -y && apt-get install -y libpng-dev curl libcurl4-openssl-dev
 RUN docker-php-ext-install pdo pdo_mysql gd curl
 
-
 #Xdebug
 RUN pecl install xdebug && docker-php-ext-enable xdebug
 RUN echo 'xdebug.remote_enable = 1' >> /usr/local/etc/php/conf.d/docker-php-ext-xdebug.ini

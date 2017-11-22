@@ -16,8 +16,10 @@ use App\Controller\AppController;
 
 $app->get('/', AppController::class.':index');
 
-$app->get('/main', AppController::class.':main');
+$app->get('/home', AppController::class.':home');
 
 $app->post('/login', AppController::class.':login');
 
 $app->get('/logout', AppController::class.':logout');
+
+$app->get('/page', AppController::class.':newPage');

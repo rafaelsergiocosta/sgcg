@@ -16,14 +16,33 @@ class AuthMiddleware
     public function __invoke($request, $response, $next)
     {
         if (!isset($_SESSION['user'])) {
-            $path = $request->getUri();
-            if (!in_array($path->getPath(), $this->options['passthrough'])) {
-                return $response->withStatus(401);
+            $path = $request->getUri()->getPath();
+            if (
+                !in_array($path, $this->options['passthrough']) 
+                    &&
+                !$this->containsPath($path, $this->options['passthrough'])
+                ) {
+                return $response->withRedirect("/login");
             }
         }
 
         $response = $next($request, $response);
 
         return $response;
+    }
+
+    private function containsPath($path, $array)
+    {
+        foreach ($array as $item) {
+            if (strpos($item, '/*')) {
+                $item = str_replace("*", "", $item);
+                if (strpos($path, $item) !== false) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        }
+        return false;
     }
 }

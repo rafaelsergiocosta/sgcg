@@ -30,27 +30,42 @@ class AppController
         return $this->view->render($response, 'index.html', $args);
     }
 
-    public function login(Request $request, Response $response, array $args)
+    public function showLoginPage(Request $request, Response $response, array $args)
+    {
+        return $this->view->render($response, 'login.html', $args);
+    }
+
+    public function doLogin(Request $request, Response $response, array $args)
     {
         $args = $request->getParams();
         $user = $this->db->table('users')->where('login', $args['login'])->first();
         if (password_verify($args['password'], $user->password)) {
             $_SESSION['user']['id'] = $user->id;
             $_SESSION['user']['login'] = $user->login;
-            return $this->view->render($response, 'home.html', $args);
+            return $response->withRedirect("/");
         } else {
-            return $this->view->render($response, 'index.html', $args);
+            return $response->withRedirect("/login");
         }
     }
 
     public function logout(Request $request, Response $response, array $args)
     {
         session_destroy();
-        return $this->view->render($response, 'login.html', $args);
+        return $response->withRedirect("/login");
     }
 
-    public function newPage(Request $request, Response $response, array $args)
+    public function addKnowledge(Request $request, Response $response, array $args)
     {
-        return $this->view->render($response, 'newPage.html', $args);
+        return $this->view->render($response, 'add.html', $args);
+    }
+
+    public function myData(Request $request, Response $response, array $args)
+    {
+        return $this->view->render($response, 'my-data.html', $args);
+    }
+
+    public function ranking(Request $request, Response $response, array $args)
+    {
+        return $this->view->render($response, 'ranking.html', $args);
     }
 }

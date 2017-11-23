@@ -6,7 +6,6 @@
 $app->add(new \App\Middleware\AuthMiddleware([
     "passthrough" => 
         [
-            "/", 
             "/login", 
             "/public/*"
         ]

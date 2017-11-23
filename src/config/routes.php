@@ -16,10 +16,14 @@ use App\Controller\AppController;
 
 $app->get('/', AppController::class.':index');
 
-$app->get('/home', AppController::class.':home');
+$app->get('/login', AppController::class.':showLoginPage');
 
-$app->post('/login', AppController::class.':login');
+$app->post('/login', AppController::class.':doLogin');
 
 $app->get('/logout', AppController::class.':logout');
 
-$app->get('/page', AppController::class.':newPage');
+$app->get('/add', AppController::class.':addKnowledge');
+
+$app->get('/my-data', AppController::class.':myData');
+
+$app->get('/ranking', AppController::class.':ranking');

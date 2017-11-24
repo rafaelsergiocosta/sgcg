@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>SGCG - Sistema de Gestão do Conhecimento Gamificado</title>
+    <link rel="stylesheet" href="../vendor/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../vendor/bootstrap/dist/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../css/cognitio.css">
+    <script src="../vendor/jquery/dist/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+
+    <ul class="topnav">
+        <li>
+            <a href="/">Pagina Inicial</a>
+        </li>
+        <li>
+            <a href="#news">Meus Dados</a>
+        </li>
+        <li>
+            <a href="#contact">Ranking</a>
+        </li>
+        <li>
+            <a class="active" href="#add">Novo Conhecimento</a>
+        </li>
+        <li class="right">
+            <a href="#about">Logout</a>
+        </li>
+    </ul>
+
+    <div class="container">
+        <div class="jumbotron">
+            <h1 class="text-center">{{knowledge.title}}</h1>
+        </div>
+        <div id="cognitio">
+            {{ knowledge.content | raw }}
+        </div>
+        <a href="#/like" class="btn btn-primary">Gostei</a>
+    </div>
+    <footer class="footer">
+        <p>Rasersoft</p>
+    </footer>
+
+</body>
+
+</html>

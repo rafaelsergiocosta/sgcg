@@ -22,8 +22,12 @@ $app->post('/login', AppController::class.':doLogin');
 
 $app->get('/logout', AppController::class.':logout');
 
-$app->get('/add', AppController::class.':addKnowledge');
+$app->get('/add', AppController::class.':showAddKnowledgePage');
+
+$app->post('/add', AppController::class.':addKnowledge');
 
 $app->get('/my-data', AppController::class.':myData');
 
 $app->get('/ranking', AppController::class.':ranking');
+
+$app->get('/page/{slug}', AppController::class.':showKnowledge');

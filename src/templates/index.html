@@ -46,50 +46,19 @@
                     <th>Categoria</th>
                     <th class="text-center">Ação</th>
                 </tr>
+                {% for cognitio in knowledge %}
                 <tr>
                     <td>
-                        <a href="#/view/{{post._id}}">{{titulo}}</a>
+                        <a href="/page/{{cognitio.slug}}">{{cognitio.title}}</a>
                     </td>
-                    <td>{{autor}}</td>
-                    <td>{{categoria}}</td>
+                    <td>{{cognitio.author}}</td>
+                    <td>{{cognitio.category}}</td>
                     <td class="text-center">
                         <a ng-href="#/post/{{post._id}}" class="btn btn-primary">Editar</a>
                         <button ng-click="remove(post)" class="btn btn-warning">Remover</buttom>
                     </td>
                 </tr>
-                <tr>
-                    <td>
-                        <a href="#/view/{{post._id}}">{{titulo}}</a>
-                    </td>
-                    <td>{{autor}}</td>
-                    <td>{{categoria}}</td>
-                    <td class="text-center">
-                        <a ng-href="#/post/{{post._id}}" class="btn btn-primary">Editar</a>
-                        <button ng-click="remove(post)" class="btn btn-warning">Remover</buttom>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <a href="#/view/{{post._id}}">{{titulo}}</a>
-                    </td>
-                    <td>{{autor}}</td>
-                    <td>{{categoria}}</td>
-                    <td class="text-center">
-                        <a ng-href="#/post/{{post._id}}" class="btn btn-primary">Editar</a>
-                        <button ng-click="remove(post)" class="btn btn-warning">Remover</buttom>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <a href="#/view/{{post._id}}">{{titulo}}</a>
-                    </td>
-                    <td>{{autor}}</td>
-                    <td>{{categoria}}</td>
-                    <td class="text-center">
-                        <a ng-href="#/post/{{post._id}}" class="btn btn-primary">Editar</a>
-                        <button ng-click="remove(post)" class="btn btn-warning">Remover</button>
-                    </td>
-                </tr>
+                {% endfor %}
             </table>
         </div>
     </div>

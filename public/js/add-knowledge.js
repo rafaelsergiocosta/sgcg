@@ -6,5 +6,11 @@ $(document).ready(function() {
         plugins : 'advlist autolink link image lists charmap print preview table code',
         menubar: false
     });
+
+    $('.select-category').select2({
+        language: "pt-BR",
+        placeholder: "Categoria",
+        allowClear: true
+      });
 });
 

@@ -18,15 +18,9 @@ class AppController
         $this->view = $c->view;
     }
 
-    public function home(Request $request, Response $response, array $args)
-    {
-        $user = $this->db->table('users')->where('id', '1')->first();
-        $args['name'] = $user->name;
-        return $this->view->render($response, 'home.html', $args);
-    }
-
     public function index(Request $request, Response $response, array $args)
     {
+        $args['knowledge'] = $this->getKnowledge();
         return $this->view->render($response, 'index.html', $args);
     }
 
@@ -54,8 +48,38 @@ class AppController
         return $response->withRedirect("/login");
     }
 
+    public function showAddKnowledgePage(Request $request, Response $response, array $args)
+    {
+        $args['categories'] = $this->getCategories();
+        return $this->view->render($response, 'add.html', $args);
+    }
+
     public function addKnowledge(Request $request, Response $response, array $args)
     {
+        $args = $request->getParams();
+
+        if (!empty($args)) {
+            $category = $this->db->table('categories')->where('id', $args['category'])->first();
+
+            $user = $this->db->table('users')->where('id', $_SESSION['user']['id'])->first();
+
+            $saved = $this->db->table('knowledge')->insert(
+                [
+                    'title' => $args['title'],
+                    'user_id' => $user->id,
+                    'category_id' => $category->id,
+                    'slug' => $args['slug'],
+                    'keywords' => $args['keywords'],
+                    'content' => $args['cognitio'],
+                    'status' => '1'
+                ]
+            );
+
+            if (!empty($saved)) {
+                return $response->withRedirect("/");
+            }
+        }
+        
         return $this->view->render($response, 'add.html', $args);
     }
 
@@ -67,5 +91,45 @@ class AppController
     public function ranking(Request $request, Response $response, array $args)
     {
         return $this->view->render($response, 'ranking.html', $args);
+    }
+
+    public function showKnowledge(Request $request, Response $response, array $args)
+    {
+        $args['knowledge'] = $this->getKnowledgeSlug($args['slug']);
+        return $this->view->render($response, 'knowledge.html', $args);
+    }
+
+    private function getCategories()
+    {
+        $categories = $this->db->table('categories')->get();
+        if(!empty($categories)) {
+            return $categories->toArray();
+        } else {
+            return false;
+        }
+    }
+
+    private function getKnowledge()
+    {
+        $knowledge = $this->db->table('knowledge')->where('status', '1')->get();
+        if(!empty($knowledge)) {
+            foreach($knowledge as &$cognitio) {
+                $cognitio->category = $this->db->table('categories')->where('id', $cognitio->category_id)->value('name');
+                $cognitio->author = $this->db->table('users')->where('id', $cognitio->user_id)->value('name');
+            }
+            return $knowledge->toArray();
+        } else {
+            return false;
+        }
+    }
+
+    private function getKnowledgeSlug($slug)
+    {
+        $knowledge = $this->db->table('knowledge')->where('slug', $slug)->first();
+        if(!empty($knowledge)) {
+            return $knowledge;
+        } else {
+            return false;
+        }
     }
 }

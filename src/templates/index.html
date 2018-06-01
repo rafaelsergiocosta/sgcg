@@ -15,63 +15,70 @@
 </head>
 
 <body>
-
-    <ul class="topnav">
-        <li>
-            <a href="/">Pagina Inicial</a>
-        </li>
-        <li>
-            <a href="/my-data">Meus Dados</a>
-        </li>
-        <li>
-            <a href="/ranking">Ranking</a>
-        </li>
-        <li>
-            <a class="active" href="/add">Novo Conhecimento</a>
-        </li>
-        <li class="right">
-            <a class="logout" href="/logout">Logout</a>
-        </li>
-    </ul>
-
-    <div class="container">
-        {% if score %}
-        <div class="alert alert-success">
-            <span class="alert-score">Você conquistou {{score}} pontos!</span>
-        </div>
-        {% endif %}
-        <div class="jumbotron">
-            <h1 class="text-center">Bem-Vindo {{usuário}}</h1>
-        </div>
-        <input class="form-control search" type="search" placeholder="Pesquisa">
-        <div class="table-responsive">
-            <table class="table table-hover" id="knowledge-table">
-                <tr>
-                    <th>Titulo</th>
-                    <th>Autor</th>
-                    <th>Categoria</th>
-                    <th class="text-center">Ação</th>
-                </tr>
-                {% for cognitio in knowledge %}
-                <tr>
-                    <td>
-                        <a href="/page/{{cognitio.slug}}">{{cognitio.title}}</a>
-                    </td>
-                    <td>{{cognitio.author}}</td>
-                    <td>{{cognitio.category}}</td>
-                    <td class="text-center">
-                        <a href="/edit/{{cognitio.id}}"><span class="glyphicon glyphicon-pencil" /></a>
-                        <a href="/remove/{{cognitio.id}}"><span class="glyphicon glyphicon-remove" /></a>
-                    </td>
-                </tr>
-                {% endfor %}
-            </table>
-        </div>
-    </div>
-    <footer class="footer">
-        <p>Rasersoft</p>
-    </footer>
-
+    <article>
+        <header>
+            <ul class="topnav">
+                <li>
+                    <a href="/">Pagina Inicial</a>
+                </li>
+                <li>
+                    <a href="/my-data">Meus Dados</a>
+                </li>
+                <li>
+                    <a href="/ranking">Ranking</a>
+                </li>
+                <li>
+                    <a class="active" href="/add">Novo Conhecimento</a>
+                </li>
+                <li class="right">
+                    <a class="logout" href="/logout">Logout</a>
+                </li>
+            </ul>
+        </header>
+        <main>
+            <div class="container">
+                {% if score %}
+                <div class="alert alert-success">
+                    <span class="alert-score">Você conquistou {{score}} pontos!</span>
+                </div>
+                {% endif %}
+                <div class="jumbotron">
+                    <h1 class="text-center">Bem-Vindo {{usuário}}</h1>
+                </div>
+                <input class="form-control search" type="search" placeholder="Pesquisa">
+                <div class="table-responsive">
+                    <table class="table table-hover" id="knowledge-table">
+                        <tr>
+                            <th>Titulo</th>
+                            <th>Autor</th>
+                            <th>Categoria</th>
+                            <th class="text-center">Ação</th>
+                        </tr>
+                        {% for cognitio in knowledge %}
+                        <tr>
+                            <td>
+                                <a href="/page/{{cognitio.slug}}">{{cognitio.title}}</a>
+                            </td>
+                            <td>{{cognitio.author}}</td>
+                            <td>{{cognitio.category}}</td>
+                            <td class="text-center">
+                                <a href="/edit/{{cognitio.id}}">
+                                    <span class="glyphicon glyphicon-pencil" />
+                                </a>
+                                <a href="/remove/{{cognitio.id}}">
+                                    <span class="glyphicon glyphicon-remove" />
+                                </a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                </div>
+            </div>
+        </main>
+        <footer class="footer">
+            <p>Rasersoft</p>
+        </footer>
+    </article>
 </body>
 
 </html>

@@ -38,23 +38,23 @@
             <h1 class="text-center">Meus Dados</h1>
         </div>
         <div class="score">
-            <p>450 Pontos</p>
-            <span class="glyphicon glyphicon-star" ></span>
-            <span class="glyphicon glyphicon-star" ></span>
+            <p>{{user.score}} Pontos</p>
+            <span class="glyphicon glyphicon-star-empty" ></span>
+            <span class="glyphicon glyphicon-star-empty" ></span>
             <span class="glyphicon glyphicon-star-empty" ></span>
         </div>
         <form action="#" method="POST">
             <div class="form-group">
                 <label for="titulo">Nome:</label>
-                <input type="text" class="form-control" name="name" placeholder="Nome" value="Teste da Silva">
+                <input type="text" class="form-control" name="name" placeholder="Nome" value="{{user.name}}">
             </div>
             <div class="form-group">
                 <label for="titulo">Email:</label>
-                <input type="email" class="form-control" name="email" placeholder="Email" value="testedasilva@teste.com">
+                <input type="email" class="form-control" name="email" placeholder="Email" value="{{user.email}}">
             </div>
             <div class="form-group">
                 <label for="titulo">Data de Nascimento:</label>
-                <input type="date" class="form-control dt-nasc" name="dtNascimento" placeholder="Data de Nasciomento" value="2017-11-14">
+                <input type="date" class="form-control dt-nasc" name="dtNascimento" placeholder="Data de Nasciomento" value="{{user.birthDate}}">
             </div>
             <button type="submit" class="btn btn-primary">Atualizar</button>
         </form>

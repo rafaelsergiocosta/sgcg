@@ -21,7 +21,7 @@ class AuthMiddleware
                 !in_array($path, $this->options['passthrough']) 
                     &&
                 !$this->containsPath($path, $this->options['passthrough'])
-                ) {
+            ) {
                 return $response->withRedirect("/login");
             }
         }

@@ -20,16 +20,16 @@
             <a href="/">Pagina Inicial</a>
         </li>
         <li>
-            <a href="#news">Meus Dados</a>
+            <a href="/my-data">Meus Dados</a>
         </li>
         <li>
-            <a href="#contact">Ranking</a>
+            <a href="/ranking">Ranking</a>
         </li>
         <li>
-            <a class="active" href="#add">Novo Conhecimento</a>
+            <a class="active" href="/add">Novo Conhecimento</a>
         </li>
         <li class="right">
-            <a href="#about">Logout</a>
+            <a class="logout" href="/logout">Logout</a>
         </li>
     </ul>
 
@@ -40,7 +40,13 @@
         <div id="cognitio">
             {{ knowledge.content | raw }}
         </div>
-        <a href="#/like" class="btn btn-primary">Gostei</a>
+        <hr>
+        <div class="util">
+            <p>Esse conhecimento foi útil?</p>
+            <a href="#/dislike" ><span class="glyphicon glyphicon-thumbs-down"></span></a>
+            |
+            <a href="#/like" ><span class="glyphicon glyphicon-thumbs-up"></span></a>
+        </div>
     </div>
     <footer class="footer">
         <p>Rasersoft</p>

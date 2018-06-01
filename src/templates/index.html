@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="./css/cognitio.css">
     <script src="./vendor/jquery/dist/jquery.min.js"></script>
     <script src="./vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="./js/cognitio.js"></script>
 </head>
 
 <body>
@@ -34,12 +35,17 @@
     </ul>
 
     <div class="container">
+        {% if score %}
+        <div class="alert alert-success">
+            <span class="alert-score">Você conquistou {{score}} pontos!</span>
+        </div>
+        {% endif %}
         <div class="jumbotron">
             <h1 class="text-center">Bem-Vindo {{usuário}}</h1>
         </div>
-        <input class="form-control" type="search" placeholder="Pesquisa">
+        <input class="form-control search" type="search" placeholder="Pesquisa">
         <div class="table-responsive">
-            <table class="table table-hover">
+            <table class="table table-hover" id="knowledge-table">
                 <tr>
                     <th>Titulo</th>
                     <th>Autor</th>
@@ -54,8 +60,8 @@
                     <td>{{cognitio.author}}</td>
                     <td>{{cognitio.category}}</td>
                     <td class="text-center">
-                        <a ng-href="#/post/{{post._id}}" class="btn btn-primary">Editar</a>
-                        <button ng-click="remove(post)" class="btn btn-warning">Remover</buttom>
+                        <a href="/edit/{{cognitio.id}}"><span class="glyphicon glyphicon-pencil" /></a>
+                        <a href="/remove/{{cognitio.id}}"><span class="glyphicon glyphicon-remove" /></a>
                     </td>
                 </tr>
                 {% endfor %}

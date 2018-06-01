@@ -19,16 +19,16 @@ services:
           VIRTUAL_HOST: 'sgcg.rasersoft.com.br'
           APACHE_DOCUMENT_ROOT: '/var/www/html/public'
           ENV_ALIAS: 'develop'
-          DB_HOST: 'sgcg.db'
+          DB_HOST: 'docker.db'
           DB_DATABASE: 'sgcg'
           DB_USERNAME: 'root'
           DB_PASSWORD: 'admin'
         build: .docker/
         links:
-          - sgcg.db
+          - docker.db
 
-    sgcg.db:
-      container_name: sgcg.db
+    docker.db:
+      container_name: docker.db
       image: mariadb:10.1
       volumes:
         - "/home/rafael/Documentos/Projetos/Docker/mysql:/var/lib/mysql"

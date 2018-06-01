@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>SGCG - Sistema de Gestão do Conhecimento Gamificado</title>
+    <link rel="stylesheet" href="../vendor/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../vendor/bootstrap/dist/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="../vendor/select2/dist/css/select2.min.css">
+    <link rel="stylesheet" href="../css/cognitio.css">
+    <script src="../vendor/jquery/dist/jquery.min.js"></script>
+    <script src="../vendor/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../vendor/select2/dist/js/select2.min.js"></script>
+    <script src="../vendor/tinymce/tinymce.min.js"></script>
+    <script src="../js/add-knowledge.js"></script>
+</head>
+
+<body>
+
+    <ul class="topnav">
+        <li>
+            <a href="/">Pagina Inicial</a>
+        </li>
+        <li>
+            <a href="/my-data">Meus Dados</a>
+        </li>
+        <li>
+            <a href="/ranking">Ranking</a>
+        </li>
+        <li>
+            <a class="active" href="/add">Novo Conhecimento</a>
+        </li>
+        <li class="right">
+            <a class="logout" href="/logout">Logout</a>
+        </li>
+    </ul>
+
+    <div class="container">
+        <div class="jumbotron">
+            <h1 class="text-center">Cadastrar Conhecimento</h1>
+        </div>
+        <form action="/edit/{{knowledge_id}}" method="POST">
+            <div class="form-group">
+                <label for="titulo">Titulo:</label>
+                <input type="text" class="form-control" name="title" value="{{knowledge.title}}" placeholder="Titulo">
+            </div>
+            <div class="form-group">
+                <label for="titulo">Categoria:</label>
+                <select class="select-category form-control" name="category" placeholder="Categoria">
+                    <option></option>
+                    {% for category in categories %}
+                    {% if category.id == knowledge.category_id %}
+                        {% set selected = 'selected' %}
+                    {% endif %}
+                    <option value="{{category.id}}" {{ selected }}>{{category.name}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="titulo">Slug:</label>
+                <input type="text" class="form-control" name="slug" value="{{knowledge.slug}}" placeholder="Slug">
+            </div>
+            <div class="form-group">
+                <label for="titulo">Palavras Chave:</label>
+                <input type="text" class="form-control" name="keywords" value="{{knowledge.keywords}}" placeholder="Palavras Chave">
+            </div>
+            <div class="form-group">
+                <label for="titulo">Conhecimento:</label>
+                <input type="textarea" class="form-control" id="knowledge" name="cognitio" value="{{knowledge.content}}">
+            </div>
+            <button type="submit" class="btn btn-danger">Cancelar</button>
+            <button type="submit" class="btn btn-primary">Salvar Rascunho</button>
+            <button type="submit" class="btn btn-success">Salvar</button>
+        </form>
+    </div>
+    <footer class="footer">
+        <p>Rasersoft</p>
+    </footer>
+
+</body>
+
+</html>

@@ -6,14 +6,6 @@ use App\Controller\AppController;
 
 // Routes
 
-/*$app->get('/', function (Request $request, Response $response, array $args) {
-    // Sample log message
-    $this->logger->info("Slim-Skeleton '/' route");
-
-    // Render index view
-    return $this->view->render($response, 'index.html', $args);
-});*/
-
 $app->get('/', AppController::class.':index');
 
 $app->get('/login', AppController::class.':showLoginPage');
@@ -31,3 +23,9 @@ $app->get('/my-data', AppController::class.':myData');
 $app->get('/ranking', AppController::class.':ranking');
 
 $app->get('/page/{slug}', AppController::class.':showKnowledge');
+
+$app->get('/edit/{knowledge_id}', AppController::class.':showEditKnowledgePage');
+
+$app->post('/edit/{knowledge_id}', AppController::class.':updateKnowledge');
+
+$app->post('/uploadImages', AppController::class.':uploadImages');

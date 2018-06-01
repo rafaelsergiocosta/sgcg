@@ -14,6 +14,7 @@ CREATE TABLE users (
 	password VARCHAR(255) NOT NULL,
 	email VARCHAR(100) NOT NULL,
 	birthDate DATE NOT NULL,
+	score INT NOT NULL DEFAULT 0,
 	created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	modified_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY(id)
@@ -40,6 +41,16 @@ CREATE TABLE knowledge (
 	modified_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY(id),
 	FOREIGN KEY(user_id) REFERENCES users(id)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE gamification_scores (
+	id INT NOT NULL auto_increment,
+	description VARCHAR(255) NOT NULL,
+	gameType ENUM('add', 'edit', 'like', 'share'),
+	score INT NOT NULL,
+	created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	modified_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY(id)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -------------------------------------------------------------

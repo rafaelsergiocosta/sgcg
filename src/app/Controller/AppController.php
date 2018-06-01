@@ -76,7 +76,11 @@ class AppController
             );
 
             if (!empty($saved)) {
-                return $response->withRedirect("/");
+                $score = $this->gamification('add', $user);
+                $args['score'] = $score;
+                $args['knowledge'] = $this->getKnowledge();
+                return $this->view->render($response, 'index.html', $args);
+                //return $response->withRedirect("/");
             }
         }
         
@@ -85,11 +89,13 @@ class AppController
 
     public function myData(Request $request, Response $response, array $args)
     {
+        $args['user'] = $this->getUserById($_SESSION['user']['id']);
         return $this->view->render($response, 'my-data.html', $args);
     }
 
     public function ranking(Request $request, Response $response, array $args)
     {
+        $args['user'] = $this->getUserById($_SESSION['user']['id']);
         return $this->view->render($response, 'ranking.html', $args);
     }
 
@@ -97,6 +103,57 @@ class AppController
     {
         $args['knowledge'] = $this->getKnowledgeSlug($args['slug']);
         return $this->view->render($response, 'knowledge.html', $args);
+    }
+
+    public function showEditKnowledgePage(Request $request, Response $response, array $args)
+    {
+        $args['knowledge'] = $this->getKnowledgeId($args['knowledge_id']);
+        $args['categories'] = $this->getCategories();
+        return $this->view->render($response, 'edit.html', $args);
+    }
+
+    public function updateKnowledge(Request $request, Response $response, array $args)
+    {
+        $args = array_merge($args, $request->getParams());
+
+        $knowledge = $this->db->table('knowledge')->where('id', $args['knowledge_id'])->first();
+
+        $category = $this->db->table('categories')->where('id', $args['category'])->first();
+
+        if (!empty($knowledge)) {
+            $saved = $this->db->table('knowledge')->where('id', $knowledge->id)
+                ->update(
+                    [
+                        'title' => $args['title'],
+                        'category_id' => $category->id,
+                        'slug' => $args['slug'],
+                        'keywords' => $args['keywords'],
+                        'content' => $args['cognitio'],
+                        'status' => '1'
+                    ]
+            );
+
+            if (!empty($saved)) {
+                return $response->withRedirect("/");
+            }
+        }
+    }
+
+    public function uploadImages(Request $request, Response $response, array $args)
+    {
+        $args = $request->getParams();
+    }
+
+    public function gamification($type, $user)
+    {
+        $gameScore = $this->db->table('gamification_scores')->where('gameType', $type)->first();
+        if (!empty($gameScore->score)) {
+            $userScore = $user->score + $gameScore->score;
+            $this->db->table('users')->where('id', $user->id)->update(['score' => $userScore]);
+            return $gameScore->score;
+        } else {
+            return false;
+        }
     }
 
     private function getCategories()
@@ -128,6 +185,26 @@ class AppController
         $knowledge = $this->db->table('knowledge')->where('slug', $slug)->first();
         if(!empty($knowledge)) {
             return $knowledge;
+        } else {
+            return false;
+        }
+    }
+
+    private function getKnowledgeId($knowledge_id)
+    {
+        $knowledge = $this->db->table('knowledge')->where('id', $knowledge_id)->first();
+        if(!empty($knowledge)) {
+            return $knowledge;
+        } else {
+            return false;
+        }
+    }
+
+    private function getUserById($userId)
+    {
+        $user = $this->db->table('users')->where('id', $userId)->first();
+        if(!empty($user)) {
+            return $user;
         } else {
             return false;
         }

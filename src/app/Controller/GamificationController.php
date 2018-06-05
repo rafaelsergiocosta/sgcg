@@ -4,19 +4,21 @@ namespace App\Controller;
 
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
+use App\Model\GamificationScore;
 use App\Model\User;
 
 class GamificationController
 {
-    public function setScore($type, $user)
+    public static function setScore($type, User $user)
     {
-        $gameScore = $this->db->table('gamification_scores')->where('gameType', $type)->first();
-        if (!empty($gameScore->score)) {
-            $userScore = $user->score + $gameScore->score;
-            $this->db->table('users')->where('id', $user->id)->update(['score' => $userScore]);
-            return $gameScore->score;
-        } else {
-            return false;
-        }
+        $gameScore = GamificationScore::where('gameType', $type)->first();
+        if (!empty($gameScore->score) && is_object($user)) {
+            $user->score += $gameScore->score;
+            if($user->save()) {
+                return $gameScore->score;
+            }
+        } 
+        
+        return false;
     }
 }

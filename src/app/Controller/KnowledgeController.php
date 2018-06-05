@@ -35,7 +35,7 @@ class KnowledgeController extends AppController
             $knowledge->status = '1';
 
             if ($knowledge->save()) {
-                $score = $this->setScore('add', $user);
+                $score = GamificationController::setScore('add', $user);
                 $args['score'] = $score;
                 $args['knowledge'] = Knowledge::with('Category', 'User')->get()->toArray();
                 return $this->view->render($response, 'index.html', $args);
@@ -80,15 +80,8 @@ class KnowledgeController extends AppController
         }
     }
 
-    private function setScore($type, $user)
+    public function uploadImages(Request $request, Response $response, array $args)
     {
-        $gameScore = $this->db->table('gamification_scores')->where('gameType', $type)->first();
-        if (!empty($gameScore->score)) {
-            $userScore = $user->score + $gameScore->score;
-            $this->db->table('users')->where('id', $user->id)->update(['score' => $userScore]);
-            return $gameScore->score;
-        } else {
-            return false;
-        }
+        $args = $request->getParams();
     }
 }

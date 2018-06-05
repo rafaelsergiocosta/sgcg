@@ -30,4 +30,4 @@ $app->get('/edit/{knowledge_id}', KnowledgeController::class.':showEditKnowledge
 
 $app->post('/edit/{knowledge_id}', KnowledgeController::class.':updateKnowledge');
 
-$app->post('/uploadImages', AppController::class.':uploadImages');
+$app->post('/uploadImages', KnowledgeController::class.':uploadImages');

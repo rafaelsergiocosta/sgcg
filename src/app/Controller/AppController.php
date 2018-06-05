@@ -4,9 +4,9 @@ namespace App\Controller;
 
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
-use App\Model\User;
 use App\Model\Knowledge;
 use App\Model\Category;
+use App\Model\User;
 
 class AppController
 {
@@ -30,17 +30,5 @@ class AppController
     public function showLoginPage(Request $request, Response $response, array $args)
     {
         return $this->view->render($response, 'login.html', $args);
-    }
-
-    public function uploadImages(Request $request, Response $response, array $args)
-    {
-        $args = $request->getParams();
-    }
-
-    public function formatDate($date, $actualFormat, $newFormat) 
-    {
-        $dateTimeFormat = date_create_from_format($actualFormat, $date);
-        $date = date_format($dateTimeFormat, $newFormat);
-        return $date;
     }
 }

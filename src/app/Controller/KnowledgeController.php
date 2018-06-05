@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
+use Slim\Http\UploadedFile;
 use App\Model\User;
 use App\Model\Knowledge;
 use App\Model\Category;
@@ -82,6 +83,25 @@ class KnowledgeController extends AppController
 
     public function uploadImages(Request $request, Response $response, array $args)
     {
-        $args = $request->getParams();
+        $directory = realpath('./uploads');
+        $uploadedFiles = $request->getUploadedFiles();
+
+        $uploadedFile = $uploadedFiles['file'];
+        if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
+            $filename = $this->moveUploadedFile($directory, $uploadedFile);
+            $response->write('uploaded ' . $filename . '<br/>');
+        }
+        return $response->withJson(array('location' => $filename));
+    }
+
+    private function moveUploadedFile($directory, UploadedFile $uploadedFile)
+    {
+        $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
+        $basename = bin2hex(random_bytes(8));
+        $filename = sprintf('%s.%0.8s', $basename, $extension);
+
+        $uploadedFile->moveTo($directory . DIRECTORY_SEPARATOR . $filename);
+
+        return $filename;
     }
 }

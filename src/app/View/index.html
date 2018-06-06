@@ -37,10 +37,12 @@
         </header>
         <main>
             <div class="container">
-                {% if score %}
+                {% if messages %}
+                {% for message in messages.score %}
                 <div class="alert alert-success">
-                    <span class="alert-score">Você conquistou {{score}} pontos!</span>
+                    <span class="alert-score">{{message}}</span>
                 </div>
+                {% endfor %}
                 {% endif %}
                 <div class="jumbotron">
                     <h1 class="text-center">Bem-Vindo {{usuário}}</h1>

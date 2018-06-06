@@ -8,13 +8,16 @@ $(document).ready(function() {
         menubar: false,
         relative_urls: false,
         images_upload_url: '/uploadImages',
-        images_upload_base_path: '/uploads'
+        images_upload_base_path: '/uploads',
+        init_instance_callback : function() {
+            $('#mceu_32').remove();
+        }
     });
 
     $('.select-category').select2({
         language: "pt-BR",
         placeholder: "Categoria",
         allowClear: true
-      });
+    });
 });
 

@@ -31,3 +31,5 @@ $app->get('/edit/{knowledge_id}', KnowledgeController::class.':showEditKnowledge
 $app->post('/edit/{knowledge_id}', KnowledgeController::class.':updateKnowledge');
 
 $app->post('/uploadImages', KnowledgeController::class.':uploadImages');
+
+$app->get('/remove/{knowledge_id}', KnowledgeController::class.':removeKnowledge');

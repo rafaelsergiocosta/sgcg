@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class User extends Model
 {
-    //use SoftDeletes;
+    use SoftDeletes;
 
     protected $table = 'users';
 
@@ -15,7 +15,7 @@ class User extends Model
 
     public $timestamps = false;
 
-    //protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at'];
 
     public function Knowledge()
     {

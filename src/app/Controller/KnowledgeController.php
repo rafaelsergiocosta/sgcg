@@ -4,7 +4,7 @@ namespace App\Controller;
 
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
-use Slim\Http\UploadedFile;
+use App\Helper\FileHelper;
 use App\Model\User;
 use App\Model\Knowledge;
 use App\Model\Category;
@@ -37,9 +37,8 @@ class KnowledgeController extends AppController
 
             if ($knowledge->save()) {
                 $score = GamificationController::setScore('add', $user);
-                $args['score'] = $score;
-                $args['knowledge'] = Knowledge::with('Category', 'User')->get()->toArray();
-                return $this->view->render($response, 'index.html', $args);
+                $this->flash->addMessage('score', "Você conquistou $score pontos!");
+                return $response->withRedirect("/");
             }
         }
         
@@ -67,6 +66,8 @@ class KnowledgeController extends AppController
 
         $category = Category::find($args['category']);
 
+        $user = User::find($_SESSION['user']['id']);
+
         if (!empty($knowledge)) {
             $knowledge->title = $args['title'];
             $knowledge->category_id = $category->id;
@@ -76,6 +77,8 @@ class KnowledgeController extends AppController
             $knowledge->status = '1';
 
             if ($knowledge->save()) {
+                $score = GamificationController::setScore('edit', $user);
+                $this->flash->addMessage('score', "Você conquistou $score pontos!");
                 return $response->withRedirect("/");
             }
         }
@@ -88,20 +91,16 @@ class KnowledgeController extends AppController
 
         $uploadedFile = $uploadedFiles['file'];
         if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
-            $filename = $this->moveUploadedFile($directory, $uploadedFile);
+            $filename = FileHelper::moveUploadedFile($directory, $uploadedFile);
             $response->write('uploaded ' . $filename . '<br/>');
         }
-        return $response->withJson(array('location' => $filename));
+        return $response->withJson(['location' => $filename]);
     }
 
-    private function moveUploadedFile($directory, UploadedFile $uploadedFile)
+    public function removeKnowledge(Request $request, Response $response, array $args)
     {
-        $extension = pathinfo($uploadedFile->getClientFilename(), PATHINFO_EXTENSION);
-        $basename = bin2hex(random_bytes(8));
-        $filename = sprintf('%s.%0.8s', $basename, $extension);
-
-        $uploadedFile->moveTo($directory . DIRECTORY_SEPARATOR . $filename);
-
-        return $filename;
+        $knowledge = Knowledge::find($args['knowledge_id']);
+        $knowledge->delete();
+        return $response->withRedirect("/");
     }
 }

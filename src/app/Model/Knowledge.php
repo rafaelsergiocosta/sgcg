@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Knowledge extends Model
 {
-    //use SoftDeletes;
+    use SoftDeletes;
 
     protected $table = 'knowledge';
 
@@ -15,7 +15,7 @@ class Knowledge extends Model
 
     public $timestamps = false;
 
-    //protected $dates = ['deleted_at'];
+    protected $dates = ['deleted_at'];
 
     public function category()
     {

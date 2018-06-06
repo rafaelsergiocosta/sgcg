@@ -17,6 +17,11 @@ $container['view'] = function ($container) {
     return $view;
 };
 
+// Falsh Messages
+$container['flash'] = function () {
+    return new \Slim\Flash\Messages();
+};
+
 // Service factory for the ORM
 $container['db'] = function ($container) {
     $capsule = new \Illuminate\Database\Capsule\Manager;

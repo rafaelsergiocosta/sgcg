@@ -40,14 +40,4 @@ services:
       restart: always
       environment:
         MYSQL_ROOT_PASSWORD: admin
-
-    portainer.io:
-       container_name: portainer.local
-       image: portainer/portainer
-       environment:
-         HTTP_PROXY: proxy-sgcg.rasersoft.com.br
-       volumes:
-         - '/opt/portainer:/data'
-         - /var/run/docker.sock:/var/run/docker.sock
-       ports:
-         - "9001:9000"
+        

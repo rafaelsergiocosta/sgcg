@@ -44,10 +44,6 @@
   cursor: pointer;
 }
 
-.form button:hover,.form button:active,.form button:focus {
-  background: rgb(165, 22, 22);
-}
-
 .form .message {
   margin: 15px 0 0;
   color: #b3b3b3;
@@ -120,8 +116,22 @@ body {
   color: #D8000C;
   background-color: #FFD2D2;
 }
+
 .title {
     text-align: center;
     color: #4CAF50;
     margin-top: 80px;
+}
+
+.score {
+  font-size: 15px;
+  text-align: center;
+  margin: auto;
+}
+
+.alert {
+  text-align: center;
+  font-weight: bold;
+  margin: auto;
+  font-size: 15px;
 }

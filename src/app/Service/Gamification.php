@@ -1,13 +1,11 @@
 <?php
 
-namespace App\Controller;
+namespace App\Service;
 
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Psr\Http\Message\ResponseInterface as Response;
 use App\Model\GamificationScore;
 use App\Model\User;
 
-class GamificationController
+class Gamification
 {
     public static function setScore($type, User $user)
     {

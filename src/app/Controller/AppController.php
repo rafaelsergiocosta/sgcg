@@ -32,6 +32,7 @@ class AppController
 
     public function showLoginPage(Request $request, Response $response, array $args)
     {
+        $args['messages'] = $this->flash->getMessages();
         return $this->view->render($response, 'login.html', $args);
     }
 }

@@ -17,6 +17,7 @@ class UserController extends AppController
             $_SESSION['user']['login'] = $user->login;
             return $response->withRedirect("/");
         } else {
+            $this->flash->addMessage('error', "Usuário ou senha incorreta!");
             return $response->withRedirect("/login");
         }
     }

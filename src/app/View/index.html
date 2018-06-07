@@ -37,9 +37,16 @@
         </header>
         <main>
             <div class="container">
-                {% if messages %}
-                {% for message in messages.score %}
+                {% if messages.success %}
+                {% for message in messages.success %}
                 <div class="alert alert-success">
+                    <span class="alert-score">{{message}}</span>
+                </div>
+                {% endfor %}
+                {% endif %}
+                {% if messages.error %}
+                {% for message in messages.error %}
+                <div class="alert alert-danger">
                     <span class="alert-score">{{message}}</span>
                 </div>
                 {% endfor %}

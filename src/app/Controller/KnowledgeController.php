@@ -4,10 +4,11 @@ namespace App\Controller;
 
 use Psr\Http\Message\ServerRequestInterface as Request;
 use Psr\Http\Message\ResponseInterface as Response;
+use App\Service\Gamification;
 use App\Helper\FileHelper;
-use App\Model\User;
 use App\Model\Knowledge;
 use App\Model\Category;
+use App\Model\User;
 
 class KnowledgeController extends AppController
 {
@@ -36,8 +37,8 @@ class KnowledgeController extends AppController
             $knowledge->status = '1';
 
             if ($knowledge->save()) {
-                $score = GamificationController::setScore('add', $user);
-                $this->flash->addMessage('score', "Você conquistou $score pontos!");
+                $score = Gamification::setScore('add', $user);
+                $this->flash->addMessage('success', "Você conquistou $score pontos!");
                 return $response->withRedirect("/");
             }
         }
@@ -77,8 +78,8 @@ class KnowledgeController extends AppController
             $knowledge->status = '1';
 
             if ($knowledge->save()) {
-                $score = GamificationController::setScore('edit', $user);
-                $this->flash->addMessage('score', "Você conquistou $score pontos!");
+                $score = Gamification::setScore('edit', $user);
+                $this->flash->addMessage('success', "Você conquistou $score pontos!");
                 return $response->withRedirect("/");
             }
         }
@@ -100,7 +101,11 @@ class KnowledgeController extends AppController
     public function removeKnowledge(Request $request, Response $response, array $args)
     {
         $knowledge = Knowledge::find($args['knowledge_id']);
-        $knowledge->delete();
+        if ($knowledge->delete()) {
+            $this->flash->addMessage('success', "Removido com sucesso!");
+        } else {
+            $this->flash->addMessage('error', "Não foi possível remover!");
+        }
         return $response->withRedirect("/");
     }
 }

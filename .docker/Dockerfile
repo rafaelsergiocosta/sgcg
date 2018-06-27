@@ -1,8 +1,11 @@
 FROM php:7.1-apache
 
 #PHP
-RUN apt-get update -y && apt-get install -y libpng-dev curl libcurl4-openssl-dev
-RUN docker-php-ext-install pdo pdo_mysql gd curl
+RUN apt-get update -y && apt-get install -y libpng-dev curl libcurl4-openssl-dev git wget build-essential gnupg zip unzip
+RUN curl -sL https://deb.nodesource.com/setup_8.x | bash -
+RUN apt-get install -y nodejs npm
+RUN docker-php-ext-install pdo pdo_mysql gd curl zip
+RUN npm install -g bower
 
 #Xdebug
 RUN pecl install xdebug && docker-php-ext-enable xdebug

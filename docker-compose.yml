@@ -10,28 +10,35 @@ services:
       restart: unless-stopped
 
     sgcg.rasersoft.com.br:
-        container_name: sgcg.rasersoft.com.br
-        image: sgcg-rasersoft
-        restart: always
-        volumes:
+      container_name: sgcg.rasersoft.com.br
+      image: sgcg-rasersoft
+      restart: always
+      volumes:
+        - ".:/var/www/html/:rw"
+      environment:
+        VIRTUAL_HOST: 'sgcg.rasersoft.com.br'
+        APACHE_DOCUMENT_ROOT: '/var/www/html/public'
+        ENV_ALIAS: 'develop'
+        DB_HOST: 'docker.db'
+        DB_DATABASE: 'sgcg'
+        DB_USERNAME: 'root'
+        DB_PASSWORD: 'admin'
+      build: .docker/
+      links:
+        - docker.db
+
+    sgcg-install:
+      restart: 'no'
+      image: sgcg-rasersoft
+      command: .s2i/bin/assemble
+      volumes:
           - ".:/var/www/html/:rw"
-        environment:
-          VIRTUAL_HOST: 'sgcg.rasersoft.com.br'
-          APACHE_DOCUMENT_ROOT: '/var/www/html/public'
-          ENV_ALIAS: 'develop'
-          DB_HOST: 'docker.db'
-          DB_DATABASE: 'sgcg'
-          DB_USERNAME: 'root'
-          DB_PASSWORD: 'admin'
-        build: .docker/
-        links:
-          - docker.db
 
     docker.db:
       container_name: docker.db
       image: mariadb:10.1
       volumes:
-        - "/home/rafael/Documentos/Projetos/Docker/mysql:/var/lib/mysql"
+        - "/home/rafael/Documents/Projetos/Docker/mysql:/var/lib/mysql"
         - "./dump/:/dump"
       ports:
         - "3306:3306"

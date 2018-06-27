@@ -1,0 +1,17 @@
+#!/bin/bash
+
+cd /var/www/html
+
+if [ ! -f "composer.phar" ]; then
+    wget https://getcomposer.org/download/1.6.5/composer.phar
+fi
+
+if [ ! -d "vendor/" ]; then
+    php composer.phar install
+fi
+
+if [ ! -d "public/vendor/" ]; then
+    bower install --allow-root
+fi
+
+rm composer.phar

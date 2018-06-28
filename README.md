@@ -20,4 +20,4 @@ Primeiramente adicione o host da aplicação e o host do banco no seu arquivo ho
 
 Posteriormente execute o comando a seguir para rodar a aplicação:
 
-    docker-compose up
+    docker-compose up --build

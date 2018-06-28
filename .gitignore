@@ -6,3 +6,5 @@ composer.phar
 .composer/
 /public/vendor/
 /public/uploads/
+/db/mysql/*
+/db/dump/*

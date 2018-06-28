@@ -24,27 +24,22 @@ services:
         DB_USERNAME: 'root'
         DB_PASSWORD: 'admin'
       build: .docker/
+      command: ./scripts/install.sh
       links:
         - docker.db
-
-    sgcg-install:
-      restart: 'no'
-      image: sgcg-rasersoft
-      command: .s2i/bin/assemble
-      volumes:
-          - ".:/var/www/html/:rw"
 
     docker.db:
       container_name: docker.db
       image: mariadb:10.1
       volumes:
-        - "/home/rafael/Documents/Projetos/Docker/mysql:/var/lib/mysql"
-        - "./dump/:/dump"
+        - "./db/mysql:/var/lib/mysql"
+        - "./db/dump/:/dump"
       ports:
         - "3306:3306"
       expose:
         - "3306"
       restart: always
       environment:
+        MYSQL_DATABASE: sgcg
         MYSQL_ROOT_PASSWORD: admin
         

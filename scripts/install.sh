@@ -23,3 +23,6 @@ rm composer.phar
 php vendor/bin/phinx migrate -e development
 
 echo "Installation finished, the application is ready!"
+
+# Start apache server
+apachectl -D FOREGROUND
